@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MainForm.ui.qml</file>
+        <file>QMLs/Welcome.qml</file>
+        <file>QMLs/class.qml</file>
+        <file>QMLs/lists.qml</file>
+    </qresource>
+</RCC>
