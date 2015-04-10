@@ -4,8 +4,8 @@ import "QMLs"
 
 ApplicationWindow {
     title: qsTr("Hello World")
-    width: 480
-    height: 800
+    width: 300
+    height: 500
     visible: true
     ToolBar {
         id: toolBar
@@ -22,6 +22,7 @@ ApplicationWindow {
         }
     }
     Loader {
+        id: loader
         anchors.top: toolBar.bottom
         anchors.left: parent.left
         anchors.right: parent.right
