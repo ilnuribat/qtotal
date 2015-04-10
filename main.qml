@@ -3,7 +3,7 @@ import QtQuick.Controls 1.3
 import "QMLs"
 
 ApplicationWindow {
-    title: qsTr("Hello World")
+    title: qsTr("Total Control")
     width: 300
     height: 500
     visible: true
@@ -12,7 +12,7 @@ ApplicationWindow {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        height: parent.height / 10
+        height: 0//parent.height / 10
         Text {
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter

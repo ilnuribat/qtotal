@@ -23,7 +23,12 @@ Rectangle {
         }
         MouseArea {
             anchors.fill: parent
-            onClicked: console.log("clicked!")
+            onPressed: buttonPutMarks.color = "green"
+            onReleased: buttonPutMarks.color = "silver"
+            onClicked: {
+                loader.setSource("qrc:/QMLs/class.qml")
+                console.log("clicked!")
+            }
         }
     }
 }
