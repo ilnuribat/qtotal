@@ -29,8 +29,11 @@ Rectangle {
         anchors.leftMargin: parent.width / 20
         anchors.rightMargin: parent.width / 20
         anchors.topMargin: parent.height / 25
-        model: ["Утренняя зарядка", "Опаздания", "Внешний вид", "Чистота комнат утром", "Сампод",
+        model: ["Утренняя зарядка", "Чистота комнат утром", "Опаздания", "Внешний вид", "Сампод",
             "Чистота территории", "Чистота комнат вечером"]
+        onCurrentIndexChanged: {
+            backend.setTypeOfMark(currentIndex)
+        }
     }
 
     Text {
@@ -82,7 +85,10 @@ Rectangle {
             anchors.fill: parent
             onPressed: parent.color = "green"
             onReleased: parent.color = "silver"
-            onClicked: loader.setSource("qrc:/QMLs/lists.qml")
+            onClicked: {
+                loader.setSource("qrc:/QMLs/lists.qml")
+                backend.getListOfClass(chooseClass.currentIndex)
+            }
         }
     }
 

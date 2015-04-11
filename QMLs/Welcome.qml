@@ -27,7 +27,6 @@ Rectangle {
             onReleased: buttonPutMarks.color = "silver"
             onClicked: {
                 loader.setSource("qrc:/QMLs/class.qml")
-                console.log("clicked!")
             }
         }
     }
