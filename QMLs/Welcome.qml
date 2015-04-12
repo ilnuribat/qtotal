@@ -18,7 +18,7 @@ Rectangle {
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: height * 0.8
+            font.pointSize: 28
             text: "Отмечать"
         }
         MouseArea {

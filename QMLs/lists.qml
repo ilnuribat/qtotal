@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.3
+import QtQuick.Window 2.2
 
 Rectangle {
     anchors.fill: parent
@@ -9,21 +10,6 @@ Rectangle {
     //вывести учащихся
     //после каждой фамилии_имени поставить ChekBox
     //данные компоновать, отправлять на сервер
-    Rectangle {
-        id: titleListOfClassOrRooms
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.right: parent.right
-        height: parent.height * 0.15
-        color: "gray"
-        Text {
-            anchors.fill: parent
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.pixelSize: height * 0.5
-            text: "Список класса"
-        }
-    }
     ListView {
         //Тут типо список будет
         id: listCheckBox
@@ -37,25 +23,25 @@ Rectangle {
         delegate: Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
-            height: listMain.height / 15
             color: markedStudent.checked ? "lightgreen" : "silver"
-
+            height: 17 * (25.4 / 72) * Screen.pixelDensity
             Rectangle {
                 id: name_surnameText
                 anchors.left: parent.left
                 anchors.leftMargin: parent.width / 20
                 height: parent.height
-                width: parent.width * 0.7
+                width: parent.width * 0.85
                 color: parent.color
 
                 Text {
                     anchors.fill: parent
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: height * 0.5
+                    font.pixelSize: height * 0.95
                     text: name
                 }
                 Text {
+                    //Это чисто для ID, чтобы в базу легче было закидывать
                     id: idOfStudent
                     text: id
                     visible: false
@@ -71,6 +57,7 @@ Rectangle {
                     anchors.centerIn: parent
                     onClicked: {
                         console.log(id, " : ", (markedStudent.checked ? 1 : 0));
+                        backend.setMark(id, (markedStudent.checked ? 1 : 0))
                     }
 
                 }
@@ -85,21 +72,39 @@ Rectangle {
     }
 
     Rectangle {
-        //Отправить данные на сервер
-        id: sendData
+        id: titleListOfClassOrRooms
         anchors.left: parent.left
+        anchors.top: parent.top
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.leftMargin: parent.width / 20
-        anchors.rightMargin: parent.width / 20
-        anchors.bottomMargin: parent.width / 20
-        height: parent.height / 15
+        height: parent.height / 10
+        border.width: 1
         color: "lightgray"
         Text {
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: height * 0.8
+            font.pointSize: 28
+            text: "Список класса"
+        }
+    }
+
+    Rectangle {
+        //Отправить данные на сервер
+        id: sendData
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        //anchors.leftMargin: parent.width / 20
+        //anchors.rightMargin: parent.width / 20
+        //anchors.bottomMargin: parent.width / 20
+        height: parent.height / 10
+        border.width: 1
+        color: "lightgray"
+        Text {
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.pointSize: 28
             text: "Отправить!"
         }
         MouseArea {
@@ -107,7 +112,9 @@ Rectangle {
 
             onPressed: parent.color = "green"
             onReleased: parent.color = "lightgray"
-            onClicked: Qt.quit()
+            onClicked: {
+                backend.sendData();
+            }
         }
     }
 }

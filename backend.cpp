@@ -62,3 +62,23 @@ void backend::setMark(QString studentID, int mark)
 {
     this->marks[studentID] = mark;
 }
+
+void backend::sendData()
+{
+    QString VALUES;
+    QVariantMap::iterator vIT;
+    for(vIT = this->marks.begin();vIT != this->marks.end(); vIT ++) {
+        VALUES.append("(" + vIT.key() + ", ");
+        VALUES.append(vIT.value().toString() + ")");
+        if(vIT != this->marks.end())
+            VALUES.append(",");
+    }
+    QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
+    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotSentData(QNetworkReply*)));
+    QString requestAddress = this->IP + "/";
+}
+
+void backend::slotSentData(QNetworkReply *reply)
+{
+
+}

@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
+import QtQuick.Controls.Private 1.0
+import QtQuick.Controls.Styles 1.3
 
 Rectangle {
     anchors.fill: parent
@@ -16,7 +18,7 @@ Rectangle {
         anchors.topMargin: parent.height / 25
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.pixelSize: height * 0.8
+        font.pointSize: 28
         text: "Что отмечать"
     }
 
@@ -46,7 +48,7 @@ Rectangle {
         anchors.topMargin: parent.height / 15
         height: parent.height / 10
         text: "Выбирете класс"
-        font.pixelSize: height * 0.8
+        font.pointSize: 28
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
@@ -61,6 +63,7 @@ Rectangle {
         anchors.top: titleChooseClass.bottom
         anchors.topMargin: parent.height / 25
         height: parent.height / 10
+
         model: ["любой класс", "7А", "7Б", "7В", "8А", "8Б", "8В", "9А", "9Б", "9В", "10А", "10Б", "10В", "11А", "11Б", "11В"]
     }
 
@@ -76,7 +79,7 @@ Rectangle {
         color: "gray"
         Text {
             anchors.fill: parent
-            font.pixelSize: height * 0.8
+            font.pointSize: 28
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             text: "Начать!"

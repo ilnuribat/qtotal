@@ -19,6 +19,7 @@ public:
     Q_INVOKABLE void getListOfClass(int classID);
     Q_INVOKABLE void setMark(QString studentID, int mark);
     Q_INVOKABLE void setTypeOfMark(int index);
+    Q_INVOKABLE void sendData();
 private:
 
     QQmlApplicationEngine engine;
@@ -33,6 +34,7 @@ signals:
 
 public slots:
     void slotGotListOfClass(QNetworkReply *reply);
+    void slotSentData(QNetworkReply *reply);
 };
 
 #endif //BACKEND_H
