@@ -36,8 +36,7 @@ private:
 signals:
 
 public slots:
-    void slotGotListOfClass(QNetworkReply *reply);
-    void slotGotListOfRooms(QNetworkReply *reply);
+    void slotGotList(QNetworkReply *reply);
     void slotSentClassMarks(QNetworkReply *reply);
 };
 

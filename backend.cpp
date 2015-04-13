@@ -7,13 +7,13 @@ backend::backend(QQuickItem *parent)
 
     engine.rootContext()->setContextProperty("backend", this);
     mainQML = engine.rootObjects().value(0);
-    this->IP = "http://192.168.1.56";
+    this->IP = "http://192.168.1.147";
 }
 
 void backend::getListOfClass(int classID)
 {
     QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
-    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotGotListOfClass(QNetworkReply*)));
+    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotGotList(QNetworkReply*)));
     QString requestAddress = this->IP + "/listofclass?id_class=" + QString::number(classID);
     QNetworkRequest request(QUrl(requestAddress.toUtf8()));
     pManager->get(request);
@@ -23,7 +23,7 @@ void backend::getListOfClass(int classID)
     //QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("Кто")));
 }
 
-void backend::slotGotListOfClass(QNetworkReply *reply)
+void backend::slotGotList(QNetworkReply *reply)
 {
     this->marks.clear();
     QObject *listOfClass = mainQML->findChild<QObject *>("listCheckBox");
@@ -139,7 +139,7 @@ void backend::sendRoomMarks()
 void backend::getListOfRooms(int classID)
 {
     QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
-    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotGotListOfRooms(QNetworkReply*)));
+    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotGotList(QNetworkReply*)));
     QString requestAddress = this->IP + "/listofrooms?id_class=" + QString::number(classID);
     QNetworkRequest request(QUrl(requestAddress.toUtf8()));
     pManager->get(request);
@@ -147,22 +147,4 @@ void backend::getListOfRooms(int classID)
     QObject *titleListOfClassOrRooms = mainQML->findChild<QObject *>("titleListOfClassOrRooms");
     QMetaObject::invokeMethod(titleListOfClassOrRooms, "setTitle", Q_ARG(QVariant, QVariant("Список комнат")));
     QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("грязно")));
-}
-
-void backend::slotGotListOfRooms(QNetworkReply *reply)
-{
-    this->marks.clear();
-    QObject *listOfClass = mainQML->findChild<QObject *>("listCheckBox");
-    QString replyStr(reply->readAll());
-    //qDebug() << replyStr << "list of class";
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(replyStr.toUtf8());
-    QJsonArray jsonArr = jsonDoc.array();
-    QVariantMap map;
-    for(int i = 0; i < jsonArr.size(); i ++)
-    {
-        map = jsonArr.at(i).toObject().toVariantMap();
-        this->marks[map["id"].toString()] = 0;
-        QMetaObject::invokeMethod(listOfClass, "append", Q_ARG(QVariant, QVariant::fromValue(map)));
-    }
-
 }
