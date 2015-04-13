@@ -47,6 +47,7 @@ Rectangle {
         anchors.top: typeOfMarking.bottom
         anchors.topMargin: parent.height / 15
         height: parent.height / 10
+        enabled: typeOfMarking.currentIndex != 5
         text: "Выберите класс"
         font.pointSize: 28
         horizontalAlignment: Text.AlignHCenter
@@ -63,7 +64,7 @@ Rectangle {
         anchors.top: titleChooseClass.bottom
         anchors.topMargin: parent.height / 25
         height: parent.height / 10
-
+        enabled: typeOfMarking.currentIndex != 5
         model: ["7А", "7Б", "7В", "8А", "8Б", "8В", "9А", "9Б", "9В", "10А", "10Б", "10В", "11А", "11Б", "11В"]
     }
 
@@ -97,7 +98,10 @@ Rectangle {
                 {
                     backend.getListOfRooms(chooseClass.currentIndex + 1)
                 }
+                else {
 
+                }
+            }
             }
         }
     }
