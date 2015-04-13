@@ -7,7 +7,7 @@ backend::backend(QQuickItem *parent)
 
     engine.rootContext()->setContextProperty("backend", this);
     mainQML = engine.rootObjects().value(0);
-    this->IP = "http://localhost";
+    this->IP = "http://192.168.1.56";
 }
 
 void backend::getListOfClass(int classID)
@@ -17,6 +17,10 @@ void backend::getListOfClass(int classID)
     QString requestAddress = this->IP + "/listofclass?id_class=" + QString::number(classID);
     QNetworkRequest request(QUrl(requestAddress.toUtf8()));
     pManager->get(request);
+
+    QObject *titleListOfClassOrRooms = mainQML->findChild<QObject *>("titleListOfClassOrRooms");
+    QMetaObject::invokeMethod(titleListOfClassOrRooms, "setTitle", Q_ARG(QVariant, QVariant("Список класса")));
+    //QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("Кто")));
 }
 
 void backend::slotGotListOfClass(QNetworkReply *reply)
@@ -34,11 +38,13 @@ void backend::slotGotListOfClass(QNetworkReply *reply)
         this->marks[map["id"].toString()] = 0;
         QMetaObject::invokeMethod(listOfClass, "append", Q_ARG(QVariant, QVariant::fromValue(map)));
     }
+
     //qDebug() << this->marks;
 }
 
-void backend::setTypeOfMark(int index)
+void backend::setTypeOfMark(int index, QString fullName)
 {
+    //Вытаскиваем название таблицы в БД из ComboBox
     switch (index) {
         case 0: this->typeOfMark = "zrd";
                 break;
@@ -55,7 +61,8 @@ void backend::setTypeOfMark(int index)
         case 6: this->typeOfMark = "chkv";
                 break;
     }
-    qDebug() << "selected " << this->typeOfMark;
+    this->fullTypeOfMark = fullName;
+    qDebug() << "selected " << this->fullTypeOfMark;
 }
 
 void backend::setMark(QString studentID, int mark)
@@ -65,20 +72,97 @@ void backend::setMark(QString studentID, int mark)
 
 void backend::sendData()
 {
-    QString VALUES;
+
+    if(this->typeOfMark == "zrd" || this->typeOfMark == "opozdal" || this->typeOfMark == "vnesh_vid" || this->typeOfMark == "sampod")
+        this->sendClassMarks();
+    else if(this->typeOfMark != "ch_terr")
+        sendRoomMarks();
+}
+
+void backend::sendClassMarks()
+{
+    int day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
+    QString VALUES = "VALUES ";
     QVariantMap::iterator vIT;
     for(vIT = this->marks.begin();vIT != this->marks.end(); vIT ++) {
         VALUES.append("(" + vIT.key() + ", ");
-        VALUES.append(vIT.value().toString() + ")");
-        if(vIT != this->marks.end())
-            VALUES.append(",");
+        VALUES.append(QString::number(day) + ", ");
+        VALUES.append(vIT.value().toString() + "),");
     }
+    int VALUESsize = VALUES.size() - 1;
+    VALUES = VALUES.left(VALUESsize);
+
     QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
-    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotSentData(QNetworkReply*)));
-    QString requestAddress = this->IP + "/";
+    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotSentClassMarks(QNetworkReply*)));
+    QString requestAddress = this->IP + "/marking";
+    QString params = "type=" + this->typeOfMark + "&";
+    params.append("data=");
+    params.append(VALUES);
+    QNetworkRequest request(QUrl(requestAddress.toUtf8()));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    pManager->post(request, params.toUtf8());
 }
 
-void backend::slotSentData(QNetworkReply *reply)
+void backend::slotSentClassMarks(QNetworkReply *reply)
 {
+
+    QString strReply(reply->readAll());
+    qDebug() << strReply;
+    QObject *listMain = mainQML->findChild<QObject *>("listMain");
+    QMetaObject::invokeMethod(listMain, "closeProgram");
+}
+
+void backend::sendRoomMarks()
+{
+    int day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
+    QString VALUES;
+    QVariantMap::iterator vIT;
+    for(vIT = this->marks.begin();vIT != this->marks.end(); vIT ++) {
+        VALUES.append(" (SELECT id, " + QString::number(day) + ", ");
+        VALUES.append(vIT.value().toString() + " FROM students ");
+        VALUES.append("WHERE room = " + vIT.key() + ") UNION");
+    }
+    int VALUESsize = VALUES.size() - 5;
+    VALUES = VALUES.left(VALUESsize);
+
+    QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
+    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotSentClassMarks(QNetworkReply*)));
+    QString requestAddress = this->IP + "/marking";
+    QString params = "type=" + this->typeOfMark + "&";
+    params.append("data=");
+    params.append(VALUES);
+    QNetworkRequest request(QUrl(requestAddress.toUtf8()));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    pManager->post(request, params.toUtf8());
+}
+
+void backend::getListOfRooms(int classID)
+{
+    QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
+    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotGotListOfRooms(QNetworkReply*)));
+    QString requestAddress = this->IP + "/listofrooms?id_class=" + QString::number(classID);
+    QNetworkRequest request(QUrl(requestAddress.toUtf8()));
+    pManager->get(request);
+
+    QObject *titleListOfClassOrRooms = mainQML->findChild<QObject *>("titleListOfClassOrRooms");
+    QMetaObject::invokeMethod(titleListOfClassOrRooms, "setTitle", Q_ARG(QVariant, QVariant("Список комнат")));
+    QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("грязно")));
+}
+
+void backend::slotGotListOfRooms(QNetworkReply *reply)
+{
+    this->marks.clear();
+    QObject *listOfClass = mainQML->findChild<QObject *>("listCheckBox");
+    QString replyStr(reply->readAll());
+    //qDebug() << replyStr << "list of class";
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(replyStr.toUtf8());
+    QJsonArray jsonArr = jsonDoc.array();
+    QVariantMap map;
+    for(int i = 0; i < jsonArr.size(); i ++)
+    {
+        map = jsonArr.at(i).toObject().toVariantMap();
+        this->marks[map["id"].toString()] = 0;
+        QMetaObject::invokeMethod(listOfClass, "append", Q_ARG(QVariant, QVariant::fromValue(map)));
+    }
 
 }

@@ -34,7 +34,7 @@ Rectangle {
         model: ["Утренняя зарядка", "Чистота комнат утром", "Опаздания", "Внешний вид", "Сампод",
             "Чистота территории", "Чистота комнат вечером"]
         onCurrentIndexChanged: {
-            backend.setTypeOfMark(currentIndex)
+            backend.setTypeOfMark(currentIndex, currentText)
         }
     }
 
@@ -47,7 +47,7 @@ Rectangle {
         anchors.top: typeOfMarking.bottom
         anchors.topMargin: parent.height / 15
         height: parent.height / 10
-        text: "Выбирете класс"
+        text: "Выберите класс"
         font.pointSize: 28
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -64,7 +64,7 @@ Rectangle {
         anchors.topMargin: parent.height / 25
         height: parent.height / 10
 
-        model: ["любой класс", "7А", "7Б", "7В", "8А", "8Б", "8В", "9А", "9Б", "9В", "10А", "10Б", "10В", "11А", "11Б", "11В"]
+        model: ["7А", "7Б", "7В", "8А", "8Б", "8В", "9А", "9Б", "9В", "10А", "10Б", "10В", "11А", "11Б", "11В"]
     }
 
     Rectangle {
@@ -90,7 +90,14 @@ Rectangle {
             onReleased: parent.color = "silver"
             onClicked: {
                 loader.setSource("qrc:/QMLs/lists.qml")
-                backend.getListOfClass(chooseClass.currentIndex)
+                if(typeOfMarking.currentIndex == 0 || (typeOfMarking.currentIndex > 1 &&
+                                                       typeOfMarking.currentIndex < 5))
+                        backend.getListOfClass(chooseClass.currentIndex + 1)
+                else if(typeOfMarking.currentIndex != 5) //не Чистота территории
+                {
+                    backend.getListOfRooms(chooseClass.currentIndex + 1)
+                }
+
             }
         }
     }

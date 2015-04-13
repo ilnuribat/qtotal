@@ -5,6 +5,7 @@ import QtQuick.Window 2.2
 Rectangle {
     anchors.fill: parent
     id: listMain
+    objectName: "listMain"
     color: "silver"
     //Получить, распарсить список учащихся
     //вывести учащихся
@@ -24,7 +25,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             color: markedStudent.checked ? "lightgreen" : "silver"
-            height: 17 * (25.4 / 72) * Screen.pixelDensity
+            height: 24 * (25.4 / 72) * Screen.pixelDensity
             Rectangle {
                 id: name_surnameText
                 anchors.left: parent.left
@@ -73,6 +74,7 @@ Rectangle {
 
     Rectangle {
         id: titleListOfClassOrRooms
+        objectName: "titleListOfClassOrRooms"
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.right: parent.right
@@ -80,12 +82,30 @@ Rectangle {
         border.width: 1
         color: "lightgray"
         Text {
+            id: titleListOf
             anchors.fill: parent
-            horizontalAlignment: Text.AlignHCenter
+            horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
-            font.pointSize: 28
-            text: "Список класса"
+            font.pointSize: 24
+            //text: "Список класса"
         }
+        Text {
+            id: titleMarkingType
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignRight
+            verticalAlignment: Text.AlignVCenter
+            font.pointSize: 24
+            //text: "чисто"
+        }
+        function setTitle(list) {
+            console.log("setting title", list)
+            titleListOf.text = list;
+        }
+        function setMarkTitle(name) {
+            console.log("setting mark", name)
+            titleMarkingType.text = name;
+        }
+
     }
 
     Rectangle {
@@ -116,6 +136,11 @@ Rectangle {
                 backend.sendData();
             }
         }
+    }
+
+    function closeProgram() {
+        console.log("exit!")
+        Qt.quit();
     }
 }
 

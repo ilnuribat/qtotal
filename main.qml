@@ -5,8 +5,8 @@ import "QMLs"
 
 ApplicationWindow {
     title: qsTr("Total Control")
-    width: 400
-    height: Screen.desktopAvailableHeight - 75
+    width: 480
+    height: 800
     visible: true
     ToolBar {
         id: toolBar
