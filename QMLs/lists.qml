@@ -57,7 +57,6 @@ Rectangle {
                     id: markedStudent
                     anchors.centerIn: parent
                     onClicked: {
-                        console.log(id, " : ", (markedStudent.checked ? 1 : 0));
                         backend.setMark(id, (markedStudent.checked ? 1 : 0))
                     }
 

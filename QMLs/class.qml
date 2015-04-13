@@ -68,7 +68,7 @@ Rectangle {
         model: ["7А", "7Б", "7В", "8А", "8Б", "8В", "9А", "9Б", "9В", "10А", "10Б", "10В", "11А", "11Б", "11В"]
     }
 
-    Rectangle {
+    Button {
         //Кнопка: "Далее", "начать отмечать"
         anchors.left: parent.left
         anchors.right: parent.right
@@ -77,7 +77,6 @@ Rectangle {
         anchors.rightMargin: parent.width / 20
         anchors.bottomMargin: parent.height / 15
         height: parent.height / 10
-        color: "gray"
         Text {
             anchors.fill: parent
             font.pointSize: 28
@@ -85,22 +84,18 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             text: "Начать!"
         }
-        MouseArea {
-            anchors.fill: parent
-            onPressed: parent.color = "green"
-            onReleased: parent.color = "silver"
-            onClicked: {
-                loader.setSource("qrc:/QMLs/lists.qml")
-                if(typeOfMarking.currentIndex == 0 || (typeOfMarking.currentIndex > 1 &&
-                                                       typeOfMarking.currentIndex < 5))
-                    backend.getListOfClass(chooseClass.currentIndex + 1)
-                else if(typeOfMarking.currentIndex != 5) //не Чистота территории
-                {
-                    backend.getListOfRooms(chooseClass.currentIndex + 1)
-                }
-                else {
-                    backend.getListOfClasses();
-                }
+
+        onClicked: {
+            loader.setSource("qrc:/QMLs/lists.qml")
+            if(typeOfMarking.currentIndex == 0 || (typeOfMarking.currentIndex > 1 &&
+                                                   typeOfMarking.currentIndex < 5))
+                backend.getListOfClass(chooseClass.currentIndex + 1)
+            else if(typeOfMarking.currentIndex != 5) //не Чистота территории
+            {
+                backend.getListOfRooms(chooseClass.currentIndex + 1)
+            }
+            else {
+                backend.getListOfClasses();
             }
         }
     }
