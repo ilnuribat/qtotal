@@ -93,18 +93,16 @@ Rectangle {
                 loader.setSource("qrc:/QMLs/lists.qml")
                 if(typeOfMarking.currentIndex == 0 || (typeOfMarking.currentIndex > 1 &&
                                                        typeOfMarking.currentIndex < 5))
-                        backend.getListOfClass(chooseClass.currentIndex + 1)
+                    backend.getListOfClass(chooseClass.currentIndex + 1)
                 else if(typeOfMarking.currentIndex != 5) //не Чистота территории
                 {
                     backend.getListOfRooms(chooseClass.currentIndex + 1)
                 }
                 else {
-
+                    backend.getListOfClasses();
                 }
-            }
             }
         }
     }
-
 }
 

@@ -21,8 +21,11 @@ public:
     Q_INVOKABLE void setMark(QString studentID, int mark);
     Q_INVOKABLE void setTypeOfMark(int index, QString fullName);
     Q_INVOKABLE void sendData();
+    Q_INVOKABLE void getListOfClasses();
     void sendClassMarks();
     void sendRoomMarks();
+    void sendClassesMarks();
+
 private:
 
     QQmlApplicationEngine engine;

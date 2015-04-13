@@ -28,7 +28,7 @@ void backend::slotGotList(QNetworkReply *reply)
     this->marks.clear();
     QObject *listOfClass = mainQML->findChild<QObject *>("listCheckBox");
     QString replyStr(reply->readAll());
-    //qDebug() << replyStr << "list of class";
+    qDebug() << replyStr;
     QJsonDocument jsonDoc = QJsonDocument::fromJson(replyStr.toUtf8());
     QJsonArray jsonArr = jsonDoc.array();
     QVariantMap map;
@@ -77,6 +77,9 @@ void backend::sendData()
         this->sendClassMarks();
     else if(this->typeOfMark != "ch_terr")
         sendRoomMarks();
+    else {
+        sendClassesMarks();
+    }
 }
 
 void backend::sendClassMarks()
@@ -147,4 +150,41 @@ void backend::getListOfRooms(int classID)
     QObject *titleListOfClassOrRooms = mainQML->findChild<QObject *>("titleListOfClassOrRooms");
     QMetaObject::invokeMethod(titleListOfClassOrRooms, "setTitle", Q_ARG(QVariant, QVariant("Список комнат")));
     QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("грязно")));
+}
+
+void backend::getListOfClasses()
+{
+    QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
+    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotGotList(QNetworkReply*)));
+    QString requestAddress = this->IP + "/listofclasses";
+    QNetworkRequest request(QUrl(requestAddress.toUtf8()));
+    pManager->get(request);
+
+    QObject *titleListOfClassOrRooms = mainQML->findChild<QObject *>("titleListOfClassOrRooms");
+    QMetaObject::invokeMethod(titleListOfClassOrRooms, "setTitle", Q_ARG(QVariant, QVariant("классы")));
+    QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("грязно")));
+}
+
+void backend::sendClassesMarks()
+{
+    int day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
+    QString VALUES;
+    QVariantMap::iterator vIT;
+    for(vIT = this->marks.begin();vIT != this->marks.end(); vIT ++) {
+        VALUES.append(" (SELECT id, " + QString::number(day) + ", ");
+        VALUES.append(vIT.value().toString() + " FROM students ");
+        VALUES.append("WHERE class = " + vIT.key() + ") UNION");
+    }
+    int VALUESsize = VALUES.size() - 5;
+    VALUES = VALUES.left(VALUESsize);
+
+    QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
+    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotSentClassMarks(QNetworkReply*)));
+    QString requestAddress = this->IP + "/marking";
+    QString params = "type=" + this->typeOfMark + "&";
+    params.append("data=");
+    params.append(VALUES);
+    QNetworkRequest request(QUrl(requestAddress.toUtf8()));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    pManager->post(request, params.toUtf8());
 }

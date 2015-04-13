@@ -25,7 +25,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             color: markedStudent.checked ? "lightgreen" : "silver"
-            height: 24 * (25.4 / 72) * Screen.pixelDensity
+            height: 20 * (25.4 / 72) * Screen.pixelDensity
             Rectangle {
                 id: name_surnameText
                 anchors.left: parent.left
@@ -38,7 +38,7 @@ Rectangle {
                     anchors.fill: parent
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: height * 0.95
+                    font.pixelSize: height * 0.85
                     text: name
                 }
                 Text {
@@ -98,11 +98,9 @@ Rectangle {
             //text: "чисто"
         }
         function setTitle(list) {
-            console.log("setting title", list)
             titleListOf.text = list;
         }
         function setMarkTitle(name) {
-            console.log("setting mark", name)
             titleMarkingType.text = name;
         }
 
