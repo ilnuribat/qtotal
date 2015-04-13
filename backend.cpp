@@ -28,7 +28,7 @@ void backend::slotGotList(QNetworkReply *reply)
     this->marks.clear();
     QObject *listOfClass = mainQML->findChild<QObject *>("listCheckBox");
     QString replyStr(reply->readAll());
-    qDebug() << replyStr;
+
     QJsonDocument jsonDoc = QJsonDocument::fromJson(replyStr.toUtf8());
     QJsonArray jsonArr = jsonDoc.array();
     QVariantMap map;
@@ -38,8 +38,6 @@ void backend::slotGotList(QNetworkReply *reply)
         this->marks[map["id"].toString()] = 0;
         QMetaObject::invokeMethod(listOfClass, "append", Q_ARG(QVariant, QVariant::fromValue(map)));
     }
-
-    //qDebug() << this->marks;
 }
 
 void backend::setTypeOfMark(int index, QString fullName)
@@ -62,7 +60,6 @@ void backend::setTypeOfMark(int index, QString fullName)
                 break;
     }
     this->fullTypeOfMark = fullName;
-    qDebug() << "selected " << this->fullTypeOfMark;
 }
 
 void backend::setMark(QString studentID, int mark)
@@ -110,9 +107,11 @@ void backend::slotSentClassMarks(QNetworkReply *reply)
 {
 
     QString strReply(reply->readAll());
-    qDebug() << strReply;
+
     QObject *listMain = mainQML->findChild<QObject *>("listMain");
-    QMetaObject::invokeMethod(listMain, "closeProgram");
+    if(strReply == "successful")
+        QMetaObject::invokeMethod(listMain, "closeProgram");
+
 }
 
 void backend::sendRoomMarks()
