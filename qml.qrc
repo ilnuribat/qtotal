@@ -5,6 +5,6 @@
         <file>QMLs/Welcome.qml</file>
         <file>QMLs/class.qml</file>
         <file>QMLs/lists.qml</file>
-        <file>showReports.qml</file>
+        <file>QMLs/showReports.qml</file>
     </qresource>
 </RCC>
