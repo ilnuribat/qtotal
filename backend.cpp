@@ -182,3 +182,19 @@ void backend::prepareClassesMarks()
 
     sendDataToServer(VALUES);
 }
+
+void backend::getDayReport()
+{
+    int day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000) - 1;
+    QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
+    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotGotReportList(QNetworkReply*)));
+    QString requestAddress = this->IP + "/dayReport?day=" + QString::number(day) + "&type=" + this->typeOfMark;
+    QNetworkRequest request(QUrl(requestAddress.toUtf8()));
+    pManager->get(request);
+}
+
+void backend::slotGotReportList(QNetworkReply *reply)
+{
+    QString StrReply(reply->readAll());
+    qDebug() << StrReply;
+}
