@@ -23,9 +23,9 @@ void backend::getListOfClass(int classID)
     QString title;
     if(this->typeOfMark == "zrd") title = "Вышел";
     if(this->typeOfMark == "opozdal") title = "Опоздал";
-    if(this->typeOfMark == "vnesh_vid") title = "отсутствует";
-    if(this->typeOfMark == "sampod") title = "присутствует";
-    QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("Кто")));
+    if(this->typeOfMark == "vnesh_vid") title = "Отсутствует";
+    if(this->typeOfMark == "sampod") title = "Присутствует";
+    QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant(title)));
 }
 
 void backend::slotGotList(QNetworkReply *reply)
