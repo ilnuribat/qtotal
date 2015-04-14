@@ -20,7 +20,12 @@ void backend::getListOfClass(int classID)
 
     QObject *titleListOfClassOrRooms = mainQML->findChild<QObject *>("titleListOfClassOrRooms");
     QMetaObject::invokeMethod(titleListOfClassOrRooms, "setTitle", Q_ARG(QVariant, QVariant("Список класса")));
-    //QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("Кто")));
+    QString title;
+    if(this->typeOfMark == "zrd") title = "Вышел";
+    if(this->typeOfMark == "opozdal") title = "Опоздал";
+    if(this->typeOfMark == "vnesh_vid") title = "отсутствует";
+    if(this->typeOfMark == "sampod") title = "присутствует";
+    QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("Кто")));
 }
 
 void backend::slotGotList(QNetworkReply *reply)
@@ -71,15 +76,29 @@ void backend::sendData()
 {
 
     if(this->typeOfMark == "zrd" || this->typeOfMark == "opozdal" || this->typeOfMark == "vnesh_vid" || this->typeOfMark == "sampod")
-        this->sendClassMarks();
+        this->prepareClassMarks();
     else if(this->typeOfMark != "ch_terr")
-        sendRoomMarks();
+        prepareRoomMarks();
     else {
-        sendClassesMarks();
+        prepareClassesMarks();
     }
 }
 
-void backend::sendClassMarks()
+void backend::sendDataToServer(QString value)
+{
+    //Эта функция будет одной общей для трех
+    QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
+    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotSentClassMarks(QNetworkReply*)));
+    QString requestAddress = this->IP + "/marking";
+    QString params = "type=" + this->typeOfMark + "&";
+    params.append("data=");
+    params.append(value);
+    QNetworkRequest request(QUrl(requestAddress.toUtf8()));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    pManager->post(request, params.toUtf8());
+}
+
+void backend::prepareClassMarks()
 {
     int day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
     QString VALUES = "VALUES ";
@@ -92,15 +111,7 @@ void backend::sendClassMarks()
     int VALUESsize = VALUES.size() - 1;
     VALUES = VALUES.left(VALUESsize);
 
-    QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
-    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotSentClassMarks(QNetworkReply*)));
-    QString requestAddress = this->IP + "/marking";
-    QString params = "type=" + this->typeOfMark + "&";
-    params.append("data=");
-    params.append(VALUES);
-    QNetworkRequest request(QUrl(requestAddress.toUtf8()));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    pManager->post(request, params.toUtf8());
+    sendDataToServer(VALUES);
 }
 
 void backend::slotSentClassMarks(QNetworkReply *reply)
@@ -114,7 +125,7 @@ void backend::slotSentClassMarks(QNetworkReply *reply)
 
 }
 
-void backend::sendRoomMarks()
+void backend::prepareRoomMarks()
 {
     int day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
     QString VALUES;
@@ -127,15 +138,7 @@ void backend::sendRoomMarks()
     int VALUESsize = VALUES.size() - 5;
     VALUES = VALUES.left(VALUESsize);
 
-    QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
-    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotSentClassMarks(QNetworkReply*)));
-    QString requestAddress = this->IP + "/marking";
-    QString params = "type=" + this->typeOfMark + "&";
-    params.append("data=");
-    params.append(VALUES);
-    QNetworkRequest request(QUrl(requestAddress.toUtf8()));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    pManager->post(request, params.toUtf8());
+    sendDataToServer(VALUES);
 }
 
 void backend::getListOfRooms(int classID)
@@ -164,7 +167,7 @@ void backend::getListOfClasses()
     QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("грязно")));
 }
 
-void backend::sendClassesMarks()
+void backend::prepareClassesMarks()
 {
     int day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
     QString VALUES;
@@ -177,13 +180,5 @@ void backend::sendClassesMarks()
     int VALUESsize = VALUES.size() - 5;
     VALUES = VALUES.left(VALUESsize);
 
-    QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
-    connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotSentClassMarks(QNetworkReply*)));
-    QString requestAddress = this->IP + "/marking";
-    QString params = "type=" + this->typeOfMark + "&";
-    params.append("data=");
-    params.append(VALUES);
-    QNetworkRequest request(QUrl(requestAddress.toUtf8()));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    pManager->post(request, params.toUtf8());
+    sendDataToServer(VALUES);
 }

@@ -22,9 +22,10 @@ public:
     Q_INVOKABLE void setTypeOfMark(int index, QString fullName);
     Q_INVOKABLE void sendData();
     Q_INVOKABLE void getListOfClasses();
-    void sendClassMarks();
-    void sendRoomMarks();
-    void sendClassesMarks();
+    void prepareClassMarks();
+    void prepareRoomMarks();
+    void prepareClassesMarks();
+    void sendDataToServer(QString value);
 
 private:
 
