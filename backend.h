@@ -22,6 +22,9 @@ public:
     Q_INVOKABLE void setTypeOfMark(int index, QString fullName);
     Q_INVOKABLE void sendData();
     Q_INVOKABLE void getListOfClasses();
+
+    Q_INVOKABLE void getDayReport();
+
     void prepareClassMarks();
     void prepareRoomMarks();
     void prepareClassesMarks();
@@ -42,6 +45,7 @@ signals:
 public slots:
     void slotGotList(QNetworkReply *reply);
     void slotSentClassMarks(QNetworkReply *reply);
+    void slotGotReportList(QNetworkReply *reply);
 };
 
 #endif //BACKEND_H
