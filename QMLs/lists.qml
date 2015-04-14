@@ -83,17 +83,19 @@ Rectangle {
         Text {
             id: titleListOf
             anchors.fill: parent
+            anchors.leftMargin: parent.width * 0.05
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
-            font.pointSize: 24
+            font.pointSize: 18
             //text: "Список класса"
         }
         Text {
             id: titleMarkingType
             anchors.fill: parent
+            anchors.rightMargin: parent.width * 0.05
             horizontalAlignment: Text.AlignRight
             verticalAlignment: Text.AlignVCenter
-            font.pointSize: 24
+            font.pointSize: 18
             //text: "чисто"
         }
         function setTitle(list) {
