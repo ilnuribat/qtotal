@@ -36,9 +36,11 @@ Rectangle {
         anchors.topMargin: buttonPutMarks.height * 1.5
         height: buttonPutMarks.height
         Text {
+            anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.pointSize: 28
+            font.pointSize: 24
+            text: "Отчеты"
         }
         onClicked: {
             loader.setSource("qrc:/QMLs/showReports.qml")
