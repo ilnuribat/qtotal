@@ -7,7 +7,8 @@ backend::backend(QQuickItem *parent)
 
     engine.rootContext()->setContextProperty("backend", this);
     mainQML = engine.rootObjects().value(0);
-    this->IP = "http://192.168.1.147";
+    this->IP = "http://194.58.108.169";
+    this->IP = "http://localhost";
 }
 
 void backend::getListOfClass(int classID)
