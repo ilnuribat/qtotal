@@ -5,29 +5,13 @@ import "QMLs"
 
 ApplicationWindow {
     title: qsTr("Total Control")
-    width: 480
-    height: 800
+    width: 300
+    height: 500
     visible: true
-    ToolBar {
-        id: toolBar
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: 0//parent.height / 10
-        Text {
-            anchors.fill: parent
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.pixelSize: height * 0.8
-            text: "Welcome!"
-        }
-    }
+
     Loader {
         id: loader
-        anchors.top: toolBar.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors.fill: parent
         source: "qrc:/QMLs/Welcome.qml"
     }
 
