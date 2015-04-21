@@ -40,6 +40,7 @@ private:
     QString IP;
     QString typeOfMark, fullTypeOfMark;
     QVariantMap marks;
+    int day;
 signals:
 
 public slots:
