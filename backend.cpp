@@ -9,6 +9,7 @@ backend::backend(QQuickItem *parent)
     mainQML = engine.rootObjects().value(0);
     this->IP = "http://194.58.108.169";
     this->IP = "http://localhost";
+    this->day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
 }
 
 void backend::getListOfClass(int classID)
@@ -16,6 +17,8 @@ void backend::getListOfClass(int classID)
     QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
     connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotGotList(QNetworkReply*)));
     QString requestAddress = this->IP + "/listofclass?id_class=" + QString::number(classID);
+    requestAddress.append("&day=" + QString::number(this->day));
+    requestAddress.append("&type=" + this->typeOfMark);
     QNetworkRequest request(QUrl(requestAddress.toUtf8()));
     pManager->get(request);
 
@@ -68,9 +71,9 @@ void backend::setTypeOfMark(int index, QString fullName)
     this->fullTypeOfMark = fullName;
 }
 
-void backend::setMark(QString studentID, int mark)
+void backend::setMark(QString ID, int mark)
 {
-    this->marks[studentID] = mark;
+    this->marks[ID] = mark;
 }
 
 void backend::sendData()

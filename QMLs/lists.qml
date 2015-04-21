@@ -31,35 +31,39 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: parent.width / 20
                 height: parent.height
-                width: parent.width * 0.85
+                width: parent.width
                 color: parent.color
+
+                CheckBox {
+                    id: markedStudent
+                    //anchors.fill: parent
+                    anchors.verticalCenter: parent.verticalCenter
+                    //anchors.left: parent.left
+                    checked: checkBoxStatus.text == "0" ? Qt.Unchecked : Qt.Checked
+                    onClicked: {
+                        backend.setMark(id, (markedStudent.checked ? 1 : 0))
+                    }
+                }
 
                 Text {
                     anchors.fill: parent
-                    horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: height * 0.85
+                    anchors.leftMargin: name_surnameText.width * 0.1
+                    verticalAlignment: Text.AlignTop
+                    font.pixelSize: name_surnameText.height * 0.8
                     text: name
                 }
+
                 Text {
                     //Это чисто для ID, чтобы в базу легче было закидывать
                     id: idOfStudent
                     text: id
                     visible: false
                 }
-            }
-            Rectangle {
-                anchors.left: name_surnameText.right
-                anchors.right: parent.right
-                height: name_surnameText.height
-                color: parent.color
-                CheckBox {
-                    id: markedStudent
-                    anchors.centerIn: parent
-                    onClicked: {
-                        backend.setMark(id, (markedStudent.checked ? 1 : 0))
-                    }
-
+                Text {
+                    //Это для метки состояния CheckBox
+                    id: checkBoxStatus
+                    text: marked
+                    visible: false
                 }
             }
         }
@@ -81,7 +85,7 @@ Rectangle {
         border.width: 1
         color: "lightgray"
         Text {
-            id: titleListOf
+            id:  titleMarkingType
             anchors.fill: parent
             anchors.leftMargin: parent.width * 0.05
             horizontalAlignment: Text.AlignLeft
@@ -90,7 +94,7 @@ Rectangle {
             //text: "Список класса"
         }
         Text {
-            id: titleMarkingType
+            id: titleListOf
             anchors.fill: parent
             anchors.rightMargin: parent.width * 0.05
             horizontalAlignment: Text.AlignRight
