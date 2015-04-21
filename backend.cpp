@@ -8,7 +8,7 @@ backend::backend(QQuickItem *parent)
     engine.rootContext()->setContextProperty("backend", this);
     mainQML = engine.rootObjects().value(0);
     this->IP = "http://194.58.108.169";
-    this->IP = "http://localhost";
+    //this->IP = "http://localhost";
     this->day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
 }
 
