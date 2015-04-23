@@ -4,12 +4,12 @@ backend::backend(QQuickItem *parent)
     : QQuickItem(parent)
 {
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
     engine.rootContext()->setContextProperty("backend", this);
     mainQML = engine.rootObjects().value(0);
     this->IP = "http://194.58.108.169";
-    //this->IP = "http://localhost";
+    this->IP = "http://localhost";
     this->day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
+    //this->classNames = {"7А", "7Б", "7В", "8А", "8Б", "8В", "9А", "9Б", "9В", "10А", "10Б", "10В", "11А", "11Б", "11В"};
 }
 
 void backend::getListOfClass(int classID)
@@ -199,6 +199,23 @@ void backend::getDayReport()
 
 void backend::slotGotReportList(QNetworkReply *reply)
 {
-    QString StrReply(reply->readAll());
-    qDebug() << StrReply;
+    QObject *listReport = mainQML->findChild<QObject *>("listReport");
+    QMetaObject::invokeMethod(listReport, "clear");
+    QString replyStr(reply->readAll());
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(replyStr.toUtf8());
+    QJsonArray jsonArr = jsonDoc.array();
+    QVariantMap map, fullMap;
+
+    for(int i = 0; i < jsonArr.size(); i ++)
+    {
+        map = jsonArr.at(i).toObject().toVariantMap();
+        qDebug() << map;
+        QMetaObject::invokeMethod(listReport, "append", Q_ARG(QVariant, QVariant::fromValue(map)));
+    }
+}
+
+void backend::setClassID(int ID)
+{
+    this->classID = ID;
 }
