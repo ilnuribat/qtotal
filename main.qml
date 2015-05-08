@@ -12,7 +12,7 @@ ApplicationWindow {
     Loader {
         id: loader
         anchors.fill: parent
-        source: "qrc:/QMLs/Welcome.qml"
+        source: "qrc:/QMLs/class.qml"
     }
 
 }
