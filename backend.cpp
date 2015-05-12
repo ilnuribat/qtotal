@@ -7,9 +7,15 @@ backend::backend(QQuickItem *parent)
     engine.rootContext()->setContextProperty("backend", this);
     mainQML = engine.rootObjects().value(0);
     this->IP = "http://194.58.108.169";
+#ifdef _DEBUG
     this->IP = "http://localhost";
+#endif
     this->day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
     //this->classNames = {"7А", "7Б", "7В", "8А", "8Б", "8В", "9А", "9Б", "9В", "10А", "10Б", "10В", "11А", "11Б", "11В"};
+
+    qDebug() << this->IP;
+    this->typeOfMark = "zrd";
+    this->fullTypeOfMark = "Утренняя зарядка";
 }
 
 void backend::getListOfClass(int classID)
@@ -49,9 +55,10 @@ void backend::slotGotList(QNetworkReply *reply)
     }
 }
 
-void backend::setTypeOfMark(int index, QString fullName)
+void backend::setTypeOfMark(QString indexStr, QString fullName)
 {
     //Вытаскиваем название таблицы в БД из ComboBox
+    int index = indexStr.toInt();
     switch (index) {
         case 0: this->typeOfMark = "zrd";
                 break;
@@ -69,6 +76,7 @@ void backend::setTypeOfMark(int index, QString fullName)
                 break;
     }
     this->fullTypeOfMark = fullName;
+    qDebug() << this->typeOfMark << "\t" << this->fullTypeOfMark;
 }
 
 void backend::setMark(QString ID, int mark)
