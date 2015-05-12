@@ -19,7 +19,7 @@ public:
     Q_INVOKABLE void getListOfClass(int classID);
     Q_INVOKABLE void getListOfRooms(int classID);
     Q_INVOKABLE void setMark(QString ID, int mark);
-    Q_INVOKABLE void setTypeOfMark(int index, QString fullName);
+    Q_INVOKABLE void setTypeOfMark(QString index, QString fullName);
     Q_INVOKABLE void sendData();
     Q_INVOKABLE void getListOfClasses();
     Q_INVOKABLE void setClassID(int ID);
