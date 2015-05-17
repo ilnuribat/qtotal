@@ -13,6 +13,9 @@ ApplicationWindow {
         id: loader
         anchors.fill: parent
         source: "qrc:/QMLs/class.qml"
+        onLoaded: {
+            backend.qmlLoaded(loader.source);
+        }
     }
 
 }
