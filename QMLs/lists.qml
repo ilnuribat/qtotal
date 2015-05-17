@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.3
 import QtQuick.Window 2.2
+import QtQuick.Dialogs 1.2
 
 Rectangle {
     anchors.fill: parent
@@ -111,7 +112,7 @@ Rectangle {
 
     }
 
-    Rectangle {
+    Button {
         //Отправить данные на сервер
         id: sendData
         anchors.left: parent.left
@@ -121,8 +122,7 @@ Rectangle {
         //anchors.rightMargin: parent.width / 20
         //anchors.bottomMargin: parent.width / 20
         height: parent.height / 10
-        border.width: 1
-        color: "lightgray"
+
         Text {
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
@@ -141,9 +141,19 @@ Rectangle {
         }
     }
 
+    MessageDialog {
+        id: messageDialog
+        title: "Данные были успешно отправлены"
+        text: "Теперь можно выйти из программы"
+        onAccepted: {
+            console.log("And of course you could only agree.")
+            Qt.quit()
+        }
+    }
+
     function closeProgram() {
         console.log("exit!")
-        Qt.quit();
+        messageDialog.open();
     }
 }
 
