@@ -24,6 +24,7 @@ public:
     Q_INVOKABLE void getListOfClasses();
     Q_INVOKABLE void setClassID(int ID);
     Q_INVOKABLE void getDayReport();
+    Q_INVOKABLE void qmlLoaded(QString url);
 
     void prepareClassMarks();
     void prepareRoomMarks();
@@ -42,8 +43,7 @@ private:
     QVariantMap marks;
     int day;
     int classID;
-    //QStringList classTitle  = {"7А", "7Б"};//, "7В", "8А", "8Б", "8В", "9А", "9Б", "9В", "10А", "10Б", "10В", "11А", "11Б", "11В"};;
-
+    QString currentQML;
 signals:
 
 public slots:
