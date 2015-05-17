@@ -3,15 +3,15 @@
 backend::backend(QQuickItem *parent)
     : QQuickItem(parent)
 {
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     engine.rootContext()->setContextProperty("backend", this);
+
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
     mainQML = engine.rootObjects().value(0);
     this->IP = "http://194.58.108.169";
-#ifdef _DEBUG
-    this->IP = "http://localhost";
-#endif
+    //this->IP = "http://localhost";
+
     this->day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
-    //this->classNames = {"7А", "7Б", "7В", "8А", "8Б", "8В", "9А", "9Б", "9В", "10А", "10Б", "10В", "11А", "11Б", "11В"};
 
     qDebug() << this->IP;
     this->typeOfMark = "zrd";
@@ -207,6 +207,11 @@ void backend::getDayReport()
 
 void backend::slotGotReportList(QNetworkReply *reply)
 {
+    if(this->currentQML != "qrc:/QMLs/lists.qml")
+    {
+        this->getListOfClass(this->classID);
+        return;
+    }
     QObject *listReport = mainQML->findChild<QObject *>("listReport");
     QMetaObject::invokeMethod(listReport, "clear");
     QString replyStr(reply->readAll());
@@ -226,4 +231,11 @@ void backend::slotGotReportList(QNetworkReply *reply)
 void backend::setClassID(int ID)
 {
     this->classID = ID;
+}
+
+void backend::qmlLoaded(QString url)
+{
+    qDebug() << url;
+    this->currentQML = url;
+    if(url == "qrc:/QMLs/lists.qml");
 }
