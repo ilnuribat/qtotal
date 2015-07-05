@@ -29,6 +29,7 @@ Rectangle {
         anchors.leftMargin: parent.width / 20
         anchors.rightMargin: parent.width / 20
         anchors.topMargin: parent.height / 25
+
         model: ["Утренняя зарядка", "Чистота комнат утром", "Опаздания", "Внешний вид", "Сампод",
             "Чистота территории", "Чистота комнат вечером"]
         onCurrentIndexChanged: {
@@ -63,6 +64,7 @@ Rectangle {
         anchors.topMargin: parent.height / 25
         height: parent.height / 10
         enabled: typeOfMarking.currentIndex != 5
+        editable: true
         model: ["7А", "7Б", "7В", "8А", "8Б", "8В", "9А", "9Б", "9В", "10А", "10Б", "10В", "11А", "11Б", "11В"]
     }
 

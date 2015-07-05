@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.3
+import QtQuick.Dialogs 1.2
 
 Rectangle {
     anchors.fill: parent
@@ -26,26 +27,42 @@ Rectangle {
         }
     }
 
-    Button {
-        id: buttonShowMarks
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: buttonPutMarks.bottom
-        anchors.leftMargin: parent.width * 0.1
-        anchors.rightMargin: parent.width * 0.1
-        anchors.topMargin: buttonPutMarks.height * 1.5
-        height: buttonPutMarks.height
-        Text {
+    Rectangle {
+        id: toLeft
+        x: 0
+        y: 0
+        height: 50
+        width: 50
+        MouseArea {
             anchors.fill: parent
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.pointSize: 24
-            text: "Отчеты"
+            onClicked: {
+                console.log(sideBar.x)
+                if(sideBar.x < 0)
+                    aRight.start()
+                else aLeft.start()
+            }
         }
-        onClicked: {
-            loader.setSource("qrc:/QMLs/showReports.qml")
-        }
+        color: "green"
     }
 
+    Rectangle {
+        id: sideBar
+        y: 50
+        width: 200
+        x: -width
+        height: parent.height - y
+        color: "red"
+
+        NumberAnimation on x {
+            id: aRight
+            to: 0
+            running: false
+        }
+        NumberAnimation on x {
+            id: aLeft
+            to: -width
+            running: false
+        }
+    }
 }
 
