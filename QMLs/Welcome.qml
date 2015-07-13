@@ -4,7 +4,8 @@ import QtQuick.Dialogs 1.2
 
 Rectangle {
     anchors.fill: parent
-    color: "lightgray"
+    id: mainLocalRect
+    color: "gray"
     Button  {
     //Кнопка. отмечать.
         id: buttonPutMarks
@@ -37,9 +38,14 @@ Rectangle {
             anchors.fill: parent
             onClicked: {
                 console.log(sideBar.x)
-                if(sideBar.x < 0)
+                if(sideBar.x < 0) {
+                    mainLocalRect.opacity = 0.5
                     aRight.start()
-                else aLeft.start()
+                }
+                else {
+                    mainLocalRect.opacity = 1.0
+                    aLeft.start()
+                }
             }
         }
         color: "green"
@@ -51,17 +57,19 @@ Rectangle {
         width: 200
         x: -width
         height: parent.height - y
-        color: "red"
+        color: "white"
 
         NumberAnimation on x {
             id: aRight
             to: 0
             running: false
+            easing.type: Easing.InOutQuad;
         }
         NumberAnimation on x {
             id: aLeft
             to: -width
             running: false
+            easing.type: Easing.InOutQuad;
         }
     }
 }
