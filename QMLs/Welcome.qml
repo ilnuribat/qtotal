@@ -28,49 +28,32 @@ Rectangle {
         }
     }
 
+    SideMenu {
+        id: sideMenu
+    }
+
     Rectangle {
         id: toLeft
         x: 0
         y: 0
         height: 50
         width: 50
+        color: "green"
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log(sideBar.x)
-                if(sideBar.x < 0) {
+                console.log(sideMenu.x)
+                if(sideMenu.x < 0) {
                     mainLocalRect.opacity = 0.5
-                    aRight.start()
+                    sideMenu.aRight();
                 }
                 else {
                     mainLocalRect.opacity = 1.0
-                    aLeft.start()
+                    sideMenu.aLeft();
                 }
             }
         }
-        color: "green"
     }
 
-    Rectangle {
-        id: sideBar
-        y: 50
-        width: 200
-        x: -width
-        height: parent.height - y
-        color: "white"
-
-        NumberAnimation on x {
-            id: aRight
-            to: 0
-            running: false
-            easing.type: Easing.InOutQuad;
-        }
-        NumberAnimation on x {
-            id: aLeft
-            to: -width
-            running: false
-            easing.type: Easing.InOutQuad;
-        }
-    }
 }
 
