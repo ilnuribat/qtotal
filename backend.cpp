@@ -237,5 +237,4 @@ void backend::qmlLoaded(QString url)
 {
     qDebug() << url;
     this->currentQML = url;
-    if(url == "qrc:/QMLs/lists.qml");
 }

@@ -4,6 +4,8 @@
         <file>QMLs/Welcome.qml</file>
         <file>QMLs/class.qml</file>
         <file>QMLs/lists.qml</file>
-        <file>QMLs/SideMenu.qml</file>
+        <file>QMLs/components/SideMenu.qml</file>
+        <file>QMLs/hamMenu/HIcon.qml</file>
+        <file>QMLs/hamMenu/MenuBackIcon.qml</file>
     </qresource>
 </RCC>

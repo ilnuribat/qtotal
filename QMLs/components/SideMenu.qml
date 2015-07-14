@@ -7,11 +7,10 @@ Rectangle {
     width: 200
     x: -width
     height: parent.height - y
-
+    property int durationTime: 500
     color: "white"
 
     function aRight() {
-        parent.opacity = 1;
         aRight_.start();
     }
 
@@ -23,12 +22,14 @@ Rectangle {
         id: aRight_
         to: 0
         running: false
+        duration: durationTime
         easing.type: Easing.InOutQuad;
     }
     NumberAnimation on x {
         id: aLeft_
         to: -width
         running: false
+        duration: durationTime
         easing.type: Easing.InOutQuad;
     }
 }

@@ -1,11 +1,13 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
+import "components"
+import "hamMenu"
 
 Rectangle {
     anchors.fill: parent
     id: mainLocalRect
-    color: "gray"
+    color: "orange"
     Button  {
     //Кнопка. отмечать.
         id: buttonPutMarks
@@ -32,28 +34,20 @@ Rectangle {
         id: sideMenu
     }
 
-    Rectangle {
-        id: toLeft
+    HIcon {
+        id: hIcon
         x: 0
         y: 0
-        height: 50
-        width: 50
-        color: "green"
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                console.log(sideMenu.x)
-                if(sideMenu.x < 0) {
-                    mainLocalRect.opacity = 0.5
-                    sideMenu.aRight();
-                }
-                else {
-                    mainLocalRect.opacity = 1.0
-                    sideMenu.aLeft();
-                }
+        onClicked: {
+            if(menuState === "menu") {
+                parent.opacity = 0.5;
+                sideMenu.aRight();
+            }
+            else {
+                parent.opacity = 1;
+                sideMenu.aLeft();
             }
         }
     }
-
 }
 
