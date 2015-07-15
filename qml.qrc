@@ -1,11 +1,15 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>QMLs/Welcome.qml</file>
+        <file>QMLs/welcome.qml</file>
         <file>QMLs/class.qml</file>
         <file>QMLs/lists.qml</file>
-        <file>QMLs/components/SideMenu.qml</file>
-        <file>QMLs/hamMenu/HIcon.qml</file>
-        <file>QMLs/hamMenu/MenuBackIcon.qml</file>
+    </qresource>
+    <qresource prefix="/Components">
+        <file>QMLs/Components/HIcon.qml</file>
+        <file>QMLs/Components/SideMenu.qml</file>
+    </qresource>
+    <qresource prefix="/Helpers">
+        <file>QMLs/Components/Helpers/MenuBackIcon.qml</file>
     </qresource>
 </RCC>

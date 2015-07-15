@@ -4,18 +4,20 @@ import QtQuick.Window 2.2
 import "QMLs"
 
 ApplicationWindow {
+    id: rootApp
     title: qsTr("Total Control")
-    width: 300
-    height: 500
+    property int aWidth: 300
+    property int aHeight: 500
+    width: aWidth
+    height: aHeight
     visible: true
 
     Loader {
         id: loader
         anchors.fill: parent
-        source: "qrc:/QMLs/Welcome.qml"
+        source: "qrc:/QMLs/welcome.qml"
         onLoaded: {
             backend.qmlLoaded(loader.source);
         }
     }
-
 }
