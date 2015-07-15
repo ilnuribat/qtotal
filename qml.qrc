@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>QMLs/welcome.qml</file>
+        <file>QMLs/Welcome.qml</file>
         <file>QMLs/class.qml</file>
         <file>QMLs/lists.qml</file>
         <file>QMLs/Components/HIcon.qml</file>
