@@ -1,12 +1,8 @@
-#include "backend.h"
+#include "welcomePage.h"
 
-backend::backend(QQuickItem *parent)
+welcomePage::welcomePage(QQmlApplicationEngine &engine, QQuickItem *parent)
     : QQuickItem(parent)
 {
-    engine.rootContext()->setContextProperty("backend", this);
-
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
     mainQML = engine.rootObjects().value(0);
     this->IP = "http://194.58.108.169";
     //this->IP = "http://localhost";
@@ -18,7 +14,7 @@ backend::backend(QQuickItem *parent)
     this->fullTypeOfMark = "Утренняя зарядка";
 }
 
-void backend::getListOfClass(int classID)
+void welcomePage::getListOfClass(int classID)
 {
     QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
     connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotGotList(QNetworkReply*)));
@@ -38,7 +34,7 @@ void backend::getListOfClass(int classID)
     QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant(title)));
 }
 
-void backend::slotGotList(QNetworkReply *reply)
+void welcomePage::slotGotList(QNetworkReply *reply)
 {
     this->marks.clear();
     QObject *listOfClass = mainQML->findChild<QObject *>("listCheckBox");
@@ -55,7 +51,7 @@ void backend::slotGotList(QNetworkReply *reply)
     }
 }
 
-void backend::setTypeOfMark(QString indexStr, QString fullName)
+void welcomePage::setTypeOfMark(QString indexStr, QString fullName)
 {
     //Вытаскиваем название таблицы в БД из ComboBox
     int index = indexStr.toInt();
@@ -79,12 +75,12 @@ void backend::setTypeOfMark(QString indexStr, QString fullName)
     qDebug() << this->typeOfMark << "\t" << this->fullTypeOfMark;
 }
 
-void backend::setMark(QString ID, int mark)
+void welcomePage::setMark(QString ID, int mark)
 {
     this->marks[ID] = mark;
 }
 
-void backend::sendData()
+void welcomePage::sendData()
 {
 
     if(this->typeOfMark == "zrd" || this->typeOfMark == "opozdal" || this->typeOfMark == "vnesh_vid" || this->typeOfMark == "sampod")
@@ -96,7 +92,7 @@ void backend::sendData()
     }
 }
 
-void backend::sendDataToServer(QString value)
+void welcomePage::sendDataToServer(QString value)
 {
     //Эта функция будет одной общей для трех
     QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
@@ -110,7 +106,7 @@ void backend::sendDataToServer(QString value)
     pManager->post(request, params.toUtf8());
 }
 
-void backend::prepareClassMarks()
+void welcomePage::prepareClassMarks()
 {
     int day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
     QString VALUES = "VALUES ";
@@ -126,7 +122,7 @@ void backend::prepareClassMarks()
     sendDataToServer(VALUES);
 }
 
-void backend::slotSentClassMarks(QNetworkReply *reply)
+void welcomePage::slotSentClassMarks(QNetworkReply *reply)
 {
 
     QString strReply(reply->readAll());
@@ -137,7 +133,7 @@ void backend::slotSentClassMarks(QNetworkReply *reply)
 
 }
 
-void backend::prepareRoomMarks()
+void welcomePage::prepareRoomMarks()
 {
     int day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
     QString VALUES;
@@ -153,7 +149,7 @@ void backend::prepareRoomMarks()
     sendDataToServer(VALUES);
 }
 
-void backend::getListOfRooms(int classID)
+void welcomePage::getListOfRooms(int classID)
 {
     QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
     connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotGotList(QNetworkReply*)));
@@ -166,7 +162,7 @@ void backend::getListOfRooms(int classID)
     QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("грязно")));
 }
 
-void backend::getListOfClasses()
+void welcomePage::getListOfClasses()
 {
     QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
     connect(pManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotGotList(QNetworkReply*)));
@@ -179,7 +175,7 @@ void backend::getListOfClasses()
     QMetaObject::invokeMethod(titleListOfClassOrRooms, "setMarkTitle", Q_ARG(QVariant, QVariant("грязно")));
 }
 
-void backend::prepareClassesMarks()
+void welcomePage::prepareClassesMarks()
 {
     int day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000);
     QString VALUES;
@@ -195,7 +191,7 @@ void backend::prepareClassesMarks()
     sendDataToServer(VALUES);
 }
 
-void backend::getDayReport()
+void welcomePage::getDayReport()
 {
     int day = QDateTime::currentMSecsSinceEpoch() / (24 * 60 * 60 * 1000) - 1;
     QNetworkAccessManager *pManager = new QNetworkAccessManager(this);
@@ -205,7 +201,7 @@ void backend::getDayReport()
     pManager->get(request);
 }
 
-void backend::slotGotReportList(QNetworkReply *reply)
+void welcomePage::slotGotReportList(QNetworkReply *reply)
 {
     if(this->currentQML != "qrc:/QMLs/lists.qml")
     {
@@ -228,12 +224,12 @@ void backend::slotGotReportList(QNetworkReply *reply)
     }
 }
 
-void backend::setClassID(int ID)
+void welcomePage::setClassID(int ID)
 {
     this->classID = ID;
 }
 
-void backend::qmlLoaded(QString url)
+void welcomePage::qmlLoaded(QString url)
 {
     qDebug() << url;
     this->currentQML = url;

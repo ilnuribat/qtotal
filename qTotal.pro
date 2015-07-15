@@ -3,7 +3,7 @@ TEMPLATE = app
 QT += qml quick widgets
 
 SOURCES += main.cpp \
-	backend.cpp
+    welcomePage.cpp
 
 RESOURCES += qml.qrc
 
@@ -18,7 +18,7 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-	backend.h
+    welcomePage.h
 
 DISTFILES += \
 	android/AndroidManifest.xml \

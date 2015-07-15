@@ -42,7 +42,7 @@ Rectangle {
                     //anchors.left: parent.left
                     checked: checkBoxStatus.text == "0" ? Qt.Unchecked : Qt.Checked
                     onClicked: {
-                        backend.setMark(id, (markedStudent.checked ? 1 : 0))
+                        //backend.setMark(id, (markedStudent.checked ? 1 : 0))
                     }
                 }
 
@@ -136,7 +136,7 @@ Rectangle {
             onPressed: parent.color = "green"
             onReleased: parent.color = "lightgray"
             onClicked: {
-                backend.sendData();
+                //backend.sendData();
             }
         }
     }

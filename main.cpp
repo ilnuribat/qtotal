@@ -1,9 +1,16 @@
 #include <QApplication>
-#include "backend.h"
+#include "welcomePage.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    new backend();
+
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
+    welcomePage *welcome = new welcomePage(engine);
+
+    engine.rootContext()->setContextProperty("welcome", welcome);
+
     return app.exec();
 }

@@ -10,11 +10,11 @@
 #include <QJsonObject>
 #include <QJsonValue>
 
-class backend : public QQuickItem
+class welcomePage : public QQuickItem
 {
     Q_OBJECT
 public:
-    explicit backend(QQuickItem *parent = 0);
+    explicit welcomePage(QQmlApplicationEngine &engine, QQuickItem *parent = 0);
 
     Q_INVOKABLE void getListOfClass(int classID);
     Q_INVOKABLE void getListOfRooms(int classID);
@@ -33,7 +33,7 @@ public:
 
 private:
 
-    QQmlApplicationEngine engine;
+
     QObject *mainQML;
     QObject *listQML;
     QObject *listView;

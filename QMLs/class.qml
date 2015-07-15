@@ -33,7 +33,7 @@ Rectangle {
         model: ["Утренняя зарядка", "Чистота комнат утром", "Опаздания", "Внешний вид", "Сампод",
             "Чистота территории", "Чистота комнат вечером"]
         onCurrentIndexChanged: {
-            backend.setTypeOfMark(currentIndex, currentText)
+            //backend.setTypeOfMark(currentIndex, currentText)
         }
     }
 
@@ -88,14 +88,15 @@ Rectangle {
         onClicked: {
             loader.setSource("qrc:/QMLs/lists.qml")
             if(typeOfMarking.currentIndex == 0 || (typeOfMarking.currentIndex > 1 &&
-                                                   typeOfMarking.currentIndex < 5))
-                backend.getListOfClass(chooseClass.currentIndex + 1)
+                                                   typeOfMarking.currentIndex < 5)) {
+                //backend.getListOfClass(chooseClass.currentIndex + 1)
+            }
             else if(typeOfMarking.currentIndex != 5) //не Чистота территории
             {
-                backend.getListOfRooms(chooseClass.currentIndex + 1)
+               // backend.getListOfRooms(chooseClass.currentIndex + 1)
             }
             else {
-                backend.getListOfClasses();
+                //backend.getListOfClasses();
             }
         }
     }

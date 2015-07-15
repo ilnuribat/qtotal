@@ -15,9 +15,9 @@ ApplicationWindow {
     Loader {
         id: loader
         anchors.fill: parent
-        source: "qrc:/QMLs/welcome.qml"
+        source: "qrc:/QMLs/Welcome.qml"
         onLoaded: {
-            backend.qmlLoaded(loader.source);
+            //backend.qmlLoaded(loader.source);
         }
     }
 }
