@@ -1,9 +1,10 @@
 import QtQuick 2.0
-import QtQuick.Controls 1.2
+import Material 0.1 as Material
+import QtQuick.Controls 1.3
 
 Rectangle {
     anchors.fill: parent
-    color: "silver"
+    color: rootApp.backGroundColor
     Text {
         //Надпись: Что омтечать
         id: textTypeOfMarking
@@ -68,8 +69,10 @@ Rectangle {
         model: ["7А", "7Б", "7В", "8А", "8Б", "8В", "9А", "9Б", "9В", "10А", "10Б", "10В", "11А", "11Б", "11В"]
     }
 
-    Button {
+    Material.Button {
         //Кнопка: "Далее", "начать отмечать"
+        backgroundColor: rootApp.otherColor
+
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -77,13 +80,8 @@ Rectangle {
         anchors.rightMargin: parent.width / 20
         anchors.bottomMargin: parent.height / 15
         height: parent.height / 10
-        Text {
-            anchors.fill: parent
-            font.pointSize: 28
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            text: "Начать!"
-        }
+
+        text: "Начать!"
 
         onClicked: {
             loader.setSource("qrc:/QMLs/lists.qml")
@@ -91,12 +89,9 @@ Rectangle {
                                                    typeOfMarking.currentIndex < 5)) {
                 //backend.getListOfClass(chooseClass.currentIndex + 1)
             }
-            else if(typeOfMarking.currentIndex != 5) //не Чистота территории
-            {
-               // backend.getListOfRooms(chooseClass.currentIndex + 1)
+            else if(typeOfMarking.currentIndex != 5) {//не Чистота территории
             }
             else {
-                //backend.getListOfClasses();
             }
         }
     }

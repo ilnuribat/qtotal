@@ -5,12 +5,10 @@ import Material 0.1
 
 Rectangle {
     id: mainLocalRect
-
-    width: 300
-    height: 500
-    color: "orange"
-
-    property int widthSize: parent.width * 0.75
+    objectName: "mainLocalRect"
+    anchors.fill: parent
+    color: rootApp.backGroundColor
+    property int widthSize: width * 0.75
 
     Text {
         text: qsTr("Добро пожаловать")
@@ -86,6 +84,9 @@ Rectangle {
         width: widthSize
         height: parent.height * 0.1
         text: qsTr("Войти")
-        backgroundColor: "#9c27b0"
+        backgroundColor: rootApp.otherColor
+        onClicked: {
+            welcome.login(login.text, password.text);
+        }
     }
 }
