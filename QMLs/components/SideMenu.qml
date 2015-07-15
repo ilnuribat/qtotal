@@ -4,13 +4,16 @@ import QtQuick.Window 2.0
 
 Rectangle {
     y: 0
+    height: 500
     width: 200
     x: -width
-    height: parent.height - y
+
     property int durationTime: 500
+
     color: "white"
 
     function aRight() {
+        console.log(2);
         aRight_.start();
     }
 
@@ -33,4 +36,3 @@ Rectangle {
         easing.type: Easing.InOutQuad;
     }
 }
-
