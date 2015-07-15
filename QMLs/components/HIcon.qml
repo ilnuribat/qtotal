@@ -1,6 +1,6 @@
 import QtQuick 2.2
-//import "qrc:/Helpers/QMLs/Components/Helpers"
-import "Helpers"
+import "qrc:/Helpers/QMLs/Components/Helpers"
+//import "Helpers"
 
 Rectangle {
     width: 48
