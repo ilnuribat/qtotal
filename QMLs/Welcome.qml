@@ -89,4 +89,12 @@ Rectangle {
             welcome.login(login.text, password.text);
         }
     }
+
+    Toast {
+        id: toast
+        objectName: "toast"
+        function show() {
+            toast._show();
+        }
+    }
 }
