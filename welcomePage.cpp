@@ -5,6 +5,10 @@ welcomePage::welcomePage(QQmlApplicationEngine &engine, QQuickItem *parent)
     : QQuickItem(parent)
 {
     mainQML = engine.rootObjects().value(0);
+    engine.rootContext()->setContextProperty("welcome", this);
+
+    QObject *loader = mainQML->findChild<QObject*>("loader");
+    loader->setProperty ("source", "qrc:/QMLs/Welcome.qml");
 
     qDebug() << IP;
 }
@@ -63,5 +67,5 @@ void welcomePage::slotAuthentication (QNetworkReply *reply)
     QVariantMap map = jsonObject.toVariantMap ();
 
     QObject *loader = mainQML->findChild<QObject*>("loader");
-    loader->setProperty ("source", "qrc:/QMLs/class.qml");
+    loader->setProperty ("source", "qrc:/QMLs/Home.qml");
 }

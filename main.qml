@@ -19,14 +19,15 @@ ApplicationWindow {
         id: loader
         objectName: "loader"
         anchors.fill: parent
-        source: "qrc:/QMLs/Welcome.qml"
         onLoaded: {
-            //backend.qmlLoaded(loader.source);
-
             if(loader.source == "qrc:/QMLs/Welcome.qml") {
-                //console.log(welcome);
+                console.log(welcome);
                 //welcome.loaded();
             }
+            if(loader.source == "qrc:/QMLs/Home.qml") {
+                console.log(home);
+            }
+
         }
     }
 }
