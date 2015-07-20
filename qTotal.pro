@@ -4,7 +4,8 @@ QT += qml quick widgets
 
 SOURCES += main.cpp \
     welcomePage.cpp \
-    externvars.cpp
+    externvars.cpp \
+    homepage.cpp
 
 RESOURCES += qml.qrc
 
@@ -20,7 +21,8 @@ include(deployment.pri)
 
 HEADERS += \
     welcomePage.h \
-    externvars.h
+    externvars.h \
+    homepage.h
 
 DISTFILES += \
 	android/AndroidManifest.xml \
