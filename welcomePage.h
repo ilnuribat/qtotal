@@ -19,6 +19,7 @@ public:
     explicit welcomePage(QQmlApplicationEngine &engine, QQuickItem *parent = 0);
     Q_INVOKABLE void login(QString login, QString password);
     Q_INVOKABLE void loaded();
+    void authentication(QString login, QString password);
 
 private:
     QObject *mainQML;
@@ -26,6 +27,7 @@ private:
 signals:
 
 public slots:
+    void slotAuthentication(QNetworkReply *reply);
 
 };
 
