@@ -7,6 +7,7 @@
         <file>QMLs/Components/HIcon.qml</file>
         <file>QMLs/Components/SideMenu.qml</file>
         <file>QMLs/Components/Helpers/MenuBackIcon.qml</file>
+        <file>QMLs/Toast.qml</file>
     </qresource>
     <qresource prefix="/Components">
         <file>QMLs/Components/HIcon.qml</file>
