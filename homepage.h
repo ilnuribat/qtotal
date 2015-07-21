@@ -15,8 +15,10 @@
 class homePage : public QQuickItem
 {
     Q_OBJECT
+
 public:
     homePage(QQmlApplicationEngine &engine);
+    Q_INVOKABLE void loaded();
 
 signals:
 
