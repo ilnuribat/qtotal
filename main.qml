@@ -22,10 +22,11 @@ ApplicationWindow {
         onLoaded: {
             if(loader.source == "qrc:/QMLs/Welcome.qml") {
                 console.log(welcome);
-                //welcome.loaded();
+                welcome.loaded();
             }
             if(loader.source == "qrc:/QMLs/Home.qml") {
                 console.log(home);
+                home.loaded();
             }
 
         }
