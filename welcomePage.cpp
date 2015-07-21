@@ -64,6 +64,8 @@ void welcomePage::slotAuthentication (QNetworkReply *reply)
     QJsonObject jsonObject = jsonDoc.object ();
     QVariantMap map = jsonObject.toVariantMap ();
     settings->setValue ("ID", map["id"]);
+    settings->setValue ("name_lastname", map["name_lastname"]);
+    settings->setValue ("position", map["position"]);
     settings->sync ();
     QObject *loader = mainQML->findChild<QObject*>("loader");
     loader->setProperty ("source", "qrc:/QMLs/Home.qml");
