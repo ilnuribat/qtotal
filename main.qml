@@ -10,7 +10,7 @@ ApplicationWindow {
     property int aWidth: 300
     property int aHeight: 500
     property string backGroundColor: "#FFC107"
-    property string otherColor: "#FF4081"
+    property string otherColor: "#9c27b0"
     width: aWidth
     height: aHeight
     visible: true
@@ -21,11 +21,9 @@ ApplicationWindow {
         anchors.fill: parent
         onLoaded: {
             if(loader.source == "qrc:/QMLs/Welcome.qml") {
-                console.log(welcome);
                 welcome.loaded();
             }
             if(loader.source == "qrc:/QMLs/Home.qml") {
-                console.log(home);
                 home.loaded();
             }
 
