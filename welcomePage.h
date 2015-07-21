@@ -23,7 +23,7 @@ public:
 
 private:
     QObject *mainQML;
-
+    QSettings *settings;
 signals:
 
 public slots:
