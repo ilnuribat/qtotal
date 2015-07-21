@@ -24,6 +24,7 @@ signals:
 
 private:
     QObject *mainQML;
+    QSettings *settings;
 
 public slots:
 };
