@@ -5,7 +5,7 @@ import "Helpers"
 Rectangle {
     width: 48
     height: 48
-    color: "#9c27b0"
+    color: rootApp.otherColor
 
     signal clicked()
     property string menuState: "menu"
@@ -16,6 +16,10 @@ Rectangle {
         onClicked: {
             menuState = menuBackIcon.state;
             menuBackIcon.state = menuBackIcon.state === "menu" ? "back" : "menu";
+            if(sideMenu)
+                if(menuState === "menu")
+                    sideMenu.aRight()
+                else sideMenu.aLeft();
         }
     }
 
