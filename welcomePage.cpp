@@ -6,10 +6,7 @@ welcomePage::welcomePage(QQmlApplicationEngine &engine, QQuickItem *parent)
 {
     mainQML = engine.rootObjects().value(0);
     engine.rootContext()->setContextProperty("welcome", this);
-
-    QObject *loader = mainQML->findChild<QObject*>("loader");
-    loader->setProperty ("source", "qrc:/QMLs/Welcome.qml");
-
+    settings = new QSettings("settings.ini", QSettings::IniFormat);
     qDebug() << IP;
 }
 
@@ -35,6 +32,7 @@ void welcomePage::login (QString login, QString password)
 
 void welcomePage::loaded ()
 {
+    qDebug() << "welcome page loaded";
 }
 
 void welcomePage::authentication (QString login, QString password)
@@ -65,7 +63,8 @@ void welcomePage::slotAuthentication (QNetworkReply *reply)
     QJsonDocument jsonDoc = QJsonDocument::fromJson(response.toUtf8());
     QJsonObject jsonObject = jsonDoc.object ();
     QVariantMap map = jsonObject.toVariantMap ();
-
+    settings->setValue ("ID", map["id"]);
+    settings->sync ();
     QObject *loader = mainQML->findChild<QObject*>("loader");
     loader->setProperty ("source", "qrc:/QMLs/Home.qml");
 }
