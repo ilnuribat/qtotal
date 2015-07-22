@@ -4,12 +4,25 @@ import QtQuick.Controls 1.3
 import "Components"
 
 Rectangle {
-    id: rectangle1
+    id: mainHome
     anchors.fill: parent
-    height: 500
-    width: 300
+    z: 0
+    SideMenu {
+        id: sideMenu
+        z: toolBar.z + 1
+        objectName: "sideMenu"
+    }
+
+    HIcon {
+        id: hIcon
+        z: sideMenu.z + 1
+        onClicked: {
+
+        }
+    }
 
     Rectangle {
+        id: backFon
         anchors {
             left: parent.left
             right: parent.right
@@ -19,9 +32,11 @@ Rectangle {
 
         color: rootApp.backGroundColor
         opacity: 1 - sideMenu.opacityVal/2
+        z: mainHome.z + 1
     }
 
     Material.Button {
+        id: button
         //Кнопка: "Далее", "начать отмечать"
         backgroundColor: rootApp.otherColor
 
@@ -34,7 +49,7 @@ Rectangle {
         height: parent.height / 10
 
         text: "Начать!"
-
+        z: backFon.z + 1
         onClicked: {
             loader.setSource("qrc:/QMLs/lists.qml")
             if(typeOfMarking.currentIndex == 0 || (typeOfMarking.currentIndex > 1 &&
@@ -48,29 +63,18 @@ Rectangle {
         }
     }
 
-    SideMenu {
-        id: sideMenu
-        z: 1
-        objectName: "sideMenu"
-    }
-
-    HIcon {
-        id: hIcon
-        z: 2
-        onClicked: {
-
-        }
-    }
-
     Rectangle {
         id: toolBar
         y: 417
         height: hIcon.height
         color: "#ededed"
         opacity: 1 - sideMenu.opacityVal/2
-        anchors.left: hIcon.right
-        anchors.right: parent.right
-        anchors.top: parent.top
+        anchors {
+            left: hIcon.right
+            right: parent.right
+            top: parent.top
+        }
+        z: backFon.z + 1
 
         Text {
             id: text1
