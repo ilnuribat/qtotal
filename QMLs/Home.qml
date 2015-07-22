@@ -4,9 +4,19 @@ import QtQuick.Controls 1.3
 import "Components"
 
 Rectangle {
+    id: rectangle1
     anchors.fill: parent
+    height: 500
+    width: 300
+
     Rectangle {
-        anchors.fill: parent
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: toolBar.bottom
+            bottom: parent.bottom
+        }
+
         color: rootApp.backGroundColor
         opacity: 1 - sideMenu.opacityVal/2
     }
@@ -40,13 +50,36 @@ Rectangle {
 
     SideMenu {
         id: sideMenu
+        z: 1
         objectName: "sideMenu"
     }
 
     HIcon {
         id: hIcon
+        z: 2
         onClicked: {
 
+        }
+    }
+
+    Rectangle {
+        id: toolBar
+        y: 417
+        height: hIcon.height
+        color: "#ededed"
+        opacity: 1 - sideMenu.opacityVal/2
+        anchors.left: hIcon.right
+        anchors.right: parent.right
+        anchors.top: parent.top
+
+        Text {
+            id: text1
+            text: qsTr("Главная")
+            font.pixelSize: parent.height * 0.5
+            textFormat: Text.PlainText
+            anchors.fill: parent
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 }
