@@ -16,9 +16,6 @@ Rectangle {
     HIcon {
         id: hIcon
         z: sideMenu.z + 1
-        onClicked: {
-
-        }
     }
 
     Rectangle {
@@ -35,33 +32,6 @@ Rectangle {
         z: mainHome.z + 1
     }
 
-    Material.Button {
-        id: button
-        //Кнопка: "Далее", "начать отмечать"
-        backgroundColor: rootApp.otherColor
-
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.leftMargin: parent.width / 20
-        anchors.rightMargin: parent.width / 20
-        anchors.bottomMargin: parent.height / 15
-        height: parent.height / 10
-
-        text: "Начать!"
-        z: backFon.z + 1
-        onClicked: {
-            loader.setSource("qrc:/QMLs/lists.qml")
-            if(typeOfMarking.currentIndex == 0 || (typeOfMarking.currentIndex > 1 &&
-                                                   typeOfMarking.currentIndex < 5)) {
-                //backend.getListOfClass(chooseClass.currentIndex + 1)
-            }
-            else if(typeOfMarking.currentIndex != 5) {//не Чистота территории
-            }
-            else {
-            }
-        }
-    }
 
     Rectangle {
         id: toolBar
@@ -84,6 +54,69 @@ Rectangle {
             anchors.fill: parent
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
+        }
+    }
+
+    Material.Button {
+        id: newExplain
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+        }
+        y: parent.height * 0.20
+        width: parent.width * 0.75
+        height: parent.height * 0.10
+        text: "Новая объяснительная"
+        backgroundColor: rootApp.otherColor
+        z: backFon.z + 1
+    }
+
+    Material.Button {
+        id: zrd
+        backgroundColor: rootApp.otherColor
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+        }
+        y: parent.height * 0.40
+        width: parent.width * 0.75
+        height: parent.height * 0.10
+
+        text: "Отметить зарядку"
+        z: backFon.z + 1
+        onClicked: {
+        }
+    }
+
+    Material.Button {
+        id: chkv
+        backgroundColor: rootApp.otherColor
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+        }
+        y: parent.height * 0.60
+        width: parent.width * 0.75
+        height: parent.height * 0.10
+
+        text: "Чистота комнат вечером"
+        z: backFon.z + 1
+        onClicked: {
+        }
+    }
+
+    Material.TextField {
+        id: textField
+        y: parent.height * 0.8
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width * 0.75
+        height: parent.height * 0.1
+        placeholderText: "test"
+        z: backFon.z + 1
+
+        Keys.onPressed: {
+            if (event.key == Qt.Key_Enter || event.key == Qt.Key_Return || event.key == Qt.Key_Back)              {
+                Qt.inputMethod.hide()
+                loader.forceActiveFocus()
+                event.accepted = true
+            }
         }
     }
 }

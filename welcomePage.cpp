@@ -32,7 +32,6 @@ void welcomePage::login (QString login, QString password)
 
 void welcomePage::loaded ()
 {
-    qDebug() << "welcome page loaded";
 }
 
 void welcomePage::authentication (QString login, QString password)

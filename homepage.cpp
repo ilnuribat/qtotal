@@ -9,7 +9,6 @@ homePage::homePage(QQmlApplicationEngine &engine)
 
 void homePage::loaded ()
 {
-    qDebug() << "home page loaded";
     QObject *sideMenu = mainQML->findChild<QObject*>("sideMenu");
     sideMenu->setProperty ("name_lastname", settings->value ("name_lastname"));
     sideMenu->setProperty ("position", settings->value ("position"));

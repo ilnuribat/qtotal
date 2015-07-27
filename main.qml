@@ -19,6 +19,7 @@ ApplicationWindow {
         id: loader
         objectName: "loader"
         anchors.fill: parent
+        focus: true
         onLoaded: {
             if(loader.source == "qrc:/QMLs/Welcome.qml") {
                 welcome.loaded();
@@ -27,6 +28,9 @@ ApplicationWindow {
                 home.loaded();
             }
 
+        }
+        onFocusChanged: console.log("focus", focus);
+        Keys.onPressed: {
         }
     }
 }
