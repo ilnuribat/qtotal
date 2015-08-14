@@ -4,11 +4,11 @@ import QtQuick.Window 2.0
 
 Rectangle {
     y: 0
-    height: 500
-    width: 200
+    height: rootApp.aHeight
+    width: 0.8 * rootApp.aWidth
     x: -width
     opacity: opacityVal
-    property int durationTime: 500
+    property int durationTime: 200
     property double opacityVal: (width + x) / (width * 1.0001)
     property string name_lastname: ""
     property string position: ""
@@ -91,6 +91,7 @@ Rectangle {
 
     function aRight() {
         aRight_.start();
+        console.log(height)
     }
     function aLeft() {
         aLeft_.start();
