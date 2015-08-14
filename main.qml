@@ -7,8 +7,8 @@ ApplicationWindow {
     id: rootApp
     objectName: "rootApp"
     title: qsTr("Total Control")
-    property int aWidth: 300
-    property int aHeight: 500
+    property int aWidth: 480
+    property int aHeight: 800
     property string backGroundColor: "#FFC107"
     property string otherColor: "#9c27b0"
     width: aWidth
@@ -30,7 +30,11 @@ ApplicationWindow {
 
         }
         onFocusChanged: console.log("focus", focus);
-        Keys.onPressed: {
+        Keys.onReleased: {
+            if (event.key === Qt.Key_Back) {
+                console.log("Back button captured - wunderbar !")
+                event.accepted = true
+            }
         }
     }
 }
