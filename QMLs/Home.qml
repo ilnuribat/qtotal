@@ -16,6 +16,7 @@ Rectangle {
     HIcon {
         id: hIcon
         z: sideMenu.z + 1
+        size: parent.height / 15
     }
 
     Rectangle {
