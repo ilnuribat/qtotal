@@ -3,8 +3,9 @@ import QtQuick 2.2
 import "Helpers"
 
 Rectangle {
-    width: 48
-    height: 48
+    property int size: 48
+    width: size
+    height: size
     color: rootApp.otherColor
 
     signal clicked()
@@ -25,7 +26,6 @@ Rectangle {
 
     MenuBackIcon {
         id: menuBackIcon
-        anchors.centerIn: parent
     }
 
     Component.onCompleted: {
