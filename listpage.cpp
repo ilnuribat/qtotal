@@ -10,5 +10,11 @@ listPage::listPage(QQmlApplicationEngine &engine)
 void listPage::loaded ()
 {
     qDebug() << "list page loaded!";
+    QObject *listCheckBox = mainQML->findChild<QObject*>("listCheckBox");
+    QVariantMap map;
+    map["name"] = "ilnur";
+    map["id"] = 1;
+    map["marked"] = "0";
+    QMetaObject::invokeMethod(listCheckBox, "append", Q_ARG(QVariant, QVariant::fromValue(map)));
 }
 
