@@ -38,7 +38,7 @@ Rectangle {
         id: toolBar
         y: 417
         height: hIcon.height
-        color: "#ededed"
+        color: rootApp.menuColor
         opacity: 1 - sideMenu.opacityVal/2
         anchors {
             left: hIcon.right
