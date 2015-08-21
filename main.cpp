@@ -2,6 +2,7 @@
 #include "welcomePage.h"
 #include "externvars.h"
 #include "homepage.h"
+#include "listpage.h"
 
 void init(QQmlApplicationEngine &engine)
 {
@@ -11,6 +12,9 @@ void init(QQmlApplicationEngine &engine)
     QObject *loader = mainQML->findChild<QObject*>("loader");
     QSettings *settings = new QSettings("settings.ini", QSettings::IniFormat);
     QString ID = settings->value ("ID").toString ();
+    loader->setProperty ("source", "qrc:/QMLs/Welcome.qml");
+    return;
+
     if (ID.size () > 0) {
         loader->setProperty ("source", "qrc:/QMLs/Home.qml");
     }
@@ -27,6 +31,7 @@ int main(int argc, char *argv[])
 
     new welcomePage(engine);
     new homePage(engine);
+    new listPage(engine);
 
     init(engine);
 
