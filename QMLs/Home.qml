@@ -84,6 +84,8 @@ Rectangle {
         text: "Отметить зарядку"
         z: backFon.z + 1
         onClicked: {
+            home.goToZRD();
+
         }
     }
 
