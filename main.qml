@@ -11,6 +11,7 @@ ApplicationWindow {
     property int aHeight: 800
     property string backGroundColor: "#FFC107"
     property string otherColor: "#9c27b0"
+    property string menuColor: "#ededed"
     width: aWidth
     height: aHeight
     visible: true
