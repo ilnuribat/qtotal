@@ -27,7 +27,8 @@ ApplicationWindow {
             if(loader.source == "qrc:/QMLs/Home.qml") {
                 home.loaded();
             }
-
+            if(loader.source == "qrc:/QMLs/Lists.qml")
+                list.loaded();
         }
         onFocusChanged: console.log("focus", focus);
         Keys.onReleased: {
