@@ -4,7 +4,9 @@ import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 
 Rectangle {
-    anchors.fill: parent
+    //anchors.fill: parent
+    width: 480
+    height: 800
     id: listMain
     objectName: "listMain"
     color: "silver"
@@ -16,12 +18,14 @@ Rectangle {
         //Тут типо список будет
         id: listCheckBox
         objectName: "listCheckBox"
-        anchors.left: parent.left
-        anchors.top: titleListOfClassOrRooms.bottom
-        anchors.right: parent.right
-        anchors.bottom: sendData.top
-        model: ListModel {}
+        anchors {
+            left: parent.left
+            top: titleListOfClassOrRooms.bottom
+            right: parent.right
+            bottom: sendData.top
+        }
 
+        model: ListModel {}
         delegate: Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
@@ -133,8 +137,8 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
 
-            onPressed: parent.color = "green"
-            onReleased: parent.color = "lightgray"
+            //onPressed: parent.color = "green"
+            //onReleased: parent.color = "lightgray"
             onClicked: {
                 //backend.sendData();
             }
