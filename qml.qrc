@@ -1,19 +1,19 @@
 <RCC>
-	<qresource prefix="/">
-		<file>main.qml</file>
-		<file>QMLs/Welcome.qml</file>
-		<file>QMLs/Home.qml</file>
-		<file>QMLs/lists.qml</file>
-		<file>QMLs/Components/HIcon.qml</file>
-		<file>QMLs/Components/SideMenu.qml</file>
-		<file>QMLs/Components/Helpers/MenuBackIcon.qml</file>
-		<file>QMLs/Toast.qml</file>
-	</qresource>
-	<qresource prefix="/Components">
-		<file>QMLs/Components/HIcon.qml</file>
-		<file>QMLs/Components/SideMenu.qml</file>
-	</qresource>
-	<qresource prefix="/Helpers">
-		<file>QMLs/Components/Helpers/MenuBackIcon.qml</file>
-	</qresource>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>QMLs/Welcome.qml</file>
+        <file>QMLs/Home.qml</file>
+        <file>QMLs/Lists.qml</file>
+        <file>QMLs/Components/HIcon.qml</file>
+        <file>QMLs/Components/SideMenu.qml</file>
+        <file>QMLs/Components/Helpers/MenuBackIcon.qml</file>
+        <file>QMLs/Toast.qml</file>
+    </qresource>
+    <qresource prefix="/Components">
+        <file>QMLs/Components/HIcon.qml</file>
+        <file>QMLs/Components/SideMenu.qml</file>
+    </qresource>
+    <qresource prefix="/Helpers">
+        <file>QMLs/Components/Helpers/MenuBackIcon.qml</file>
+    </qresource>
 </RCC>
