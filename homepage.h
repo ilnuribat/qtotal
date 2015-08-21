@@ -19,6 +19,8 @@ class homePage : public QQuickItem
 public:
     homePage(QQmlApplicationEngine &engine);
     Q_INVOKABLE void loaded();
+    Q_INVOKABLE void goToZRD();
+
 
 signals:
 
